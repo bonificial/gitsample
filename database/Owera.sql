@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.3
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Apr 06, 2020 at 07:52 PM
--- Server version: 5.7.26
--- PHP Version: 7.4.1
+-- Host: 127.0.0.1
+-- Generation Time: Apr 06, 2020 at 11:39 PM
+-- Server version: 10.1.40-MariaDB
+-- PHP Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `Owera`
+-- Database: `owera`
 --
 
 -- --------------------------------------------------------
@@ -43,24 +45,6 @@ CREATE TABLE `certification` (
   `title` varchar(200) NOT NULL,
   `description` text NOT NULL,
   `score` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Class`
---
-
-CREATE TABLE `Class` (
-  `id_class` int(11) NOT NULL,
-  `title` varchar(170) NOT NULL,
-  `creation_date` date NOT NULL,
-  `start_date` date NOT NULL,
-  `end_start` date NOT NULL,
-  `update_date` date NOT NULL,
-  `price` float NOT NULL,
-  `number_lessons` int(11) NOT NULL,
-  `rating` varchar(70) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -94,6 +78,24 @@ CREATE TABLE `job` (
   `creation_date` date NOT NULL,
   `description` text NOT NULL,
   `price` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `klass`
+--
+
+CREATE TABLE `klass` (
+  `id_class` int(11) NOT NULL,
+  `title` varchar(170) NOT NULL,
+  `creation_date` date NOT NULL,
+  `start_date` date NOT NULL,
+  `end_start` date NOT NULL,
+  `update_date` date NOT NULL,
+  `price` float NOT NULL,
+  `number_lessons` int(11) NOT NULL,
+  `rating` varchar(70) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -259,12 +261,6 @@ ALTER TABLE `certification`
   ADD PRIMARY KEY (`id_certificat`);
 
 --
--- Indexes for table `Class`
---
-ALTER TABLE `Class`
-  ADD PRIMARY KEY (`id_class`);
-
---
 -- Indexes for table `finance`
 --
 ALTER TABLE `finance`
@@ -276,6 +272,12 @@ ALTER TABLE `finance`
 --
 ALTER TABLE `job`
   ADD PRIMARY KEY (`id_job`);
+
+--
+-- Indexes for table `klass`
+--
+ALTER TABLE `klass`
+  ADD PRIMARY KEY (`id_class`);
 
 --
 -- Indexes for table `lesson`
@@ -367,12 +369,6 @@ ALTER TABLE `certification`
   MODIFY `id_certificat` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Class`
---
-ALTER TABLE `Class`
-  MODIFY `id_class` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `finance`
 --
 ALTER TABLE `finance`
@@ -383,6 +379,12 @@ ALTER TABLE `finance`
 --
 ALTER TABLE `job`
   MODIFY `id_job` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `klass`
+--
+ALTER TABLE `klass`
+  MODIFY `id_class` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `lesson`
@@ -458,7 +460,7 @@ ALTER TABLE `finance`
 -- Constraints for table `lesson`
 --
 ALTER TABLE `lesson`
-  ADD CONSTRAINT `lesson_ibfk_1` FOREIGN KEY (`id_class`) REFERENCES `Class` (`id_class`);
+  ADD CONSTRAINT `lesson_ibfk_1` FOREIGN KEY (`id_class`) REFERENCES `klass` (`id_class`);
 
 --
 -- Constraints for table `meeting`
@@ -511,6 +513,7 @@ ALTER TABLE `users`
 --
 ALTER TABLE `wallet`
   ADD CONSTRAINT `wallet_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
