@@ -9,9 +9,4 @@ $app->get('/', function (Request $request, Response $response, $args) {
     return $response;
 });
 
-$app->get('/login/{username}/{password}', function (Request $request, Response $response, array $args) {
-    $login = new AuthController();
-    $res = $login->getData($args['username'],$args['password']);
-    $response->getBody()->write($res);
-    return $response;
-});
+$app->post('/Signup', '\AuthController:signup');

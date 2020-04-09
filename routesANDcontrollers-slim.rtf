@@ -1,0 +1,27 @@
+all these will do the same
+
+1. You can use getParsedBody which is provided by Slim to get the params for a post request
+ $app->post('/Signup', function (Request $request, Response $response, array $args) {
+     $parsedata = $request->getParsedBody();
+     $caller = new AuthController();
+     $res = $caller->signup($parsedata['username'],$parsedata['password']);
+     $response->getBody()->write($res);
+     return $response;
+ });
+
+2. You can use $_POST which is the traditional way of retreiving params for a post request
+  $app->post('/Signup', function (Request $request, Response $response, array $args) {
+     $caller = new AuthController();
+     $res = $caller->signup($_POST['username'],$_POST['password']);
+     $response->getBody()->write($res);
+     return $response;
+ });
+
+ 3. Or better still make use of the way slim calls controllers which is cleaner
+  $app->post('/Signup', '\AuthController:signup');
+
+ 4. Note that no.1 and no.2 is the way to call methods of a class by instantiating an object of the class e.g
+      $object = new Class();
+      $result = $object->ClassMethod([params]);
+
+5. note the same rules applies for the get, put, delete etc
