@@ -18,6 +18,10 @@ class AuthController extends Account{
                 ->withHeader('Content-Type', 'application/json');
       }
     }
+    public function login($request, $response, $args){
+      $response->getBody()->write('logged in!');
+      return $response;
+    }
     public function validate_data($req){
       require "gump.class.php";
       
@@ -50,10 +54,6 @@ class AuthController extends Account{
       } else {
          return $validated_data; // validation successful
       }
-    }
-
-    public function login($request, $response, $args){
-
     }
 
 }
