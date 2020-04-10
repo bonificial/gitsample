@@ -4,8 +4,8 @@ include_once 'app/models/users/usermodel.php';
 
 class Account extends Dbh{
 
-    public $_id;
-    public $login;
+    public $id_account;
+    public $username;
     public $password;
 
     private $success = 200;
@@ -52,8 +52,24 @@ class Account extends Dbh{
             $stmt = null;
         }
     }
-    protected function login_user($name){
-
+    protected function login_user($account_details){
+        $res = $this->verify_this_account($account_details);
+        if($res === true) return  (new User())->log_user_in($this->id_account);
+        else if($res === false) return array('error' => 'password is incorrect!');
+        else return $res;
     }
-
+    protected function verify_this_account($account_details){
+        $sql = "SELECT * FROM account WHERE username=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$account_details['username']]);
+        $result = $stmt->fetch();
+        if(!$result ){
+            return array('error' => 'username doesn\'t exist!');
+            $stmt = null;
+        }else{
+            $this->id_account = $result['id_account'];
+            return password_verify($account_details['password'], $result['password']);
+            $stmt = null;
+        }
+    }
 }

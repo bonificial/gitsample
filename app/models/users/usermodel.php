@@ -19,4 +19,13 @@ class User extends Dbh{
         return array('success' => 'account successfully created!');
         $stmt = null;
     }
+    public function log_user_in($id_account){
+        $sql = "SELECT * FROM users WHERE id_account=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$id_account]);
+        $result = $stmt->fetch();
+        return $result;
+        $stmt = null;
+        
+    }
 }
