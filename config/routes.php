@@ -9,4 +9,5 @@ $app->get('/', function (Request $request, Response $response, $args) {
     return $response;
 });
 
-$app->post('/Signup', '\AuthController:signup');
+$app->post('/signup', '\AuthController:signup');
+$app->post('/login', '\AuthController:login');
