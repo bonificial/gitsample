@@ -25,12 +25,9 @@ class AuthController extends Account{
         return $response
                    ->withHeader('Content-Type', 'application/json');
       }else{
-      //   $this->verify_this_password($validated_data);
-      //   $pass_verif = password_verify($validated_data['password'], $user['password']);
-      // $validated_data['password'] = password_hash($validated_data['password'], PASSWORD_DEFAULT);
-      $response->getBody()->write(json_encode($this->login_user($validated_data)));
-      return $response
-                ->withHeader('Content-Type', 'application/json');
+        $response->getBody()->write(json_encode($this->login_user($validated_data)));
+        return $response
+                  ->withHeader('Content-Type', 'application/json');
       }
     }
     public function validate_data($req){
