@@ -3,11 +3,10 @@ include_once 'config/dbh.php';
 
 class Message extends Dbh{
     public $_id;
-    public $creatorId;
-    public $creatorName;
     public $message;
-    public $parentMessageId;
-    public $deleteRequestBySender;
-    //public $created_at; @ams: this should be currentTimeStamp and should be rename created_at
+    public $created_at;
+    public $delete_request;
+    public $parent_message;
+    public $creator_id;
     
 }

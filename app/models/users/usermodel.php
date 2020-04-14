@@ -2,14 +2,14 @@
 include_once 'config/dbh.php';
 
 class User extends Dbh{
-    public $_id;
-    public $account_id;
+    public $id_user;
     public $name;
     public $birthdate;
     public $phone;
     public $email;
     public $adress;
     public $nationality;
+    public $id_account;
 
     public function create_user($name,$birthdate,$phone,$email,$address,$nationality,$id_account){
         $sql = "INSERT INTO users (name,birthdate,phone,email,address,nationality,id_account) VALUES(?,?,?,?,?,?,?)";
