@@ -3,14 +3,15 @@ include_once 'config/dbh.php';
 
 class Job extends Dbh{
     
-    public $_id;
-    public $user_id;
+    public $id_job;
     public $title;
     public $tasks;
     public $start_date;
     public $end_date;
+    public $update_date;
+    public $creation_date;
+    public $description;
     public $price;
-    //public $created_at; @ams: this should be currentTimeStamp on the db with the first create operation
-    //public $updated_at; @ams: this should be currentTimeStamp on the db with an update operation
+    public $id_user;
 
 }

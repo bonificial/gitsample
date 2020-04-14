@@ -2,8 +2,7 @@
 include_once 'config/dbh.php';
 
 class MessageRecipient extends Dbh{
-    public $_id;
-    public $recipientId;
-    public $isRead;
-    public $deleteRequestByRecipient;
+    public $id_messr;
+    public $is_read;
+    public $recipient_id;
 }

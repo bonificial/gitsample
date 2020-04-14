@@ -3,11 +3,11 @@ include_once 'config/dbh.php';
 
 class Finance extends Dbh{
     
-    public $_id;
-    public $user_id;
+    public $id_finance;
     public $type;
     public $amount;
     public $topic;
-    public $transactionDate;
+    public $transaction_date;
+    public $id_profile;
     
 }
