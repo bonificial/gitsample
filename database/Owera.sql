@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2020 at 12:17 AM
+-- Generation Time: May 05, 2020 at 11:29 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -224,6 +224,19 @@ CREATE TABLE `topics_category` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `topic_timings`
+--
+
+CREATE TABLE `topic_timings` (
+  `timings_id` int(11) NOT NULL,
+  `start_from` time NOT NULL,
+  `end_at` time NOT NULL,
+  `id_topic` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -354,6 +367,13 @@ ALTER TABLE `topics_category`
   ADD PRIMARY KEY (`id_category`);
 
 --
+-- Indexes for table `topic_timings`
+--
+ALTER TABLE `topic_timings`
+  ADD PRIMARY KEY (`timings_id`),
+  ADD KEY `id_topic` (`id_topic`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -450,6 +470,12 @@ ALTER TABLE `topics_category`
   MODIFY `id_category` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `topic_timings`
+--
+ALTER TABLE `topic_timings`
+  MODIFY `timings_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -532,6 +558,12 @@ ALTER TABLE `profile`
 --
 ALTER TABLE `topics`
   ADD CONSTRAINT `topics_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `topics_category` (`id_category`);
+
+--
+-- Constraints for table `topic_timings`
+--
+ALTER TABLE `topic_timings`
+  ADD CONSTRAINT `timings_fk` FOREIGN KEY (`id_topic`) REFERENCES `topics` (`id_topic`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users`
