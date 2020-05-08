@@ -8,7 +8,7 @@ class AuthController extends Account{
     public function signup($request, $response, $args){
       $validated_data = self::validate_data($request->getParsedBody());
       if($this->errors != null){
-        $response->getBody()->write(json_encode($this->_rename_arr_key()));
+        $response->getBody()->write(json_encode($this->errors));
         return $response
                    ->withHeader('Content-Type', 'application/json');
       }else{
@@ -21,7 +21,7 @@ class AuthController extends Account{
     public function login($request, $response, $args){
       $validated_data = self::validate_login_data($request->getParsedBody());
       if($this->errors != null){
-        $response->getBody()->write(json_encode($this->_rename_arr_key()));
+        $response->getBody()->write(json_encode($this->errors));
         return $response
                    ->withHeader('Content-Type', 'application/json');
       }else{
@@ -30,14 +30,6 @@ class AuthController extends Account{
                   ->withHeader('Content-Type', 'application/json');
       }
     }
-    /**
-     * ams: Helper function to rename array keys.
-    */
-    public function _rename_arr_key() {
-      $key = array_keys($this->errors);
-      return array('message' => $this->errors[$key[0]],'status' => 'error');
-    }
-
     public function validate_data($req){
       require "gump.class.php";
       

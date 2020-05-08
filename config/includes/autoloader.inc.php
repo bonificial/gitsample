@@ -6,12 +6,7 @@ spl_autoload_register(function($class_name) {
     $subDirs = array(
         '/authenticate/',
         '/finances/',
-        '/education/',
-        '/jobs/',
         '/messages/',
-        '/profile/',
-        '/topics/',
-        '/users/'
     );
     foreach( $dirs as $dir ) {
         foreach ($subDirs as $sub) {
