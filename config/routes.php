@@ -11,4 +11,3 @@ $app->get('/', function (Request $request, Response $response, $args) {
 
 $app->post('/signup', '\AuthController:signup');
 $app->post('/login', '\AuthController:login');
-$app->post('/updateUser', '\UserController:updateUser');
