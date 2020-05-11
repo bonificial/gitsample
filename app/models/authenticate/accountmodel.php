@@ -12,8 +12,8 @@ class Account extends Dbh{
     private $fail = 200;
 
     protected function create_user_account($account_details){
-        if($this->does_username_exist($account_details['username'])){ return array('error' => 'username already exist!');}
-        if($this->does_email_exist($account_details['email'])){ return array('error' => 'email already exist!');}
+        if($this->does_username_exist($account_details['username'])){ return array('message' => 'username already exist!', 'status' => 'error');}
+        if($this->does_email_exist($account_details['email'])){ return array('message' => 'email already exist!', 'status' => 'error');}
 
         $sql = " INSERT INTO account (username,password) VALUES(?,?)";
         $stmt = $this->connect()->prepare($sql);
@@ -55,7 +55,7 @@ class Account extends Dbh{
     protected function login_user($account_details){
         $res = $this->verify_this_account($account_details);
         if($res === true) return  (new User())->log_user_in($this->id_account);
-        else if($res === false) return array('error' => 'password is incorrect!');
+        else if($res === false) return array('message' => 'password is incorrect!', 'status' => 'error');
         else return $res;
     }
     protected function verify_this_account($account_details){
@@ -64,7 +64,7 @@ class Account extends Dbh{
         $stmt->execute([$account_details['username']]);
         $result = $stmt->fetch();
         if(!$result ){
-            return array('error' => 'username doesn\'t exist!');
+            return array('message' => 'username doesn\'t exist!', 'status' => 'error');
             $stmt = null;
         }else{
             $this->id_account = $result['id_account'];
