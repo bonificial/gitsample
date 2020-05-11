@@ -18,4 +18,11 @@ class Profile extends Dbh{
         return array('message' => 'account successfully created!','status' => 'success');
         $stmt = null;
     }
+    protected function add_portfolio($id_profile,$skills,$experience=''){
+        $sql = "INSERT INTO portfolio (skills,experience,id_profile) VALUES(?,?,?)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$skills,$experience,$id_profile]);
+        return array('message' => 'portfolio successfully added!','status' => 'success');
+        $stmt = null;
+    }
 }

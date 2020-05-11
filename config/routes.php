@@ -13,3 +13,4 @@ $app->post('/signup', '\AuthController:signup');
 $app->post('/login', '\AuthController:login');
 $app->post('/updateUser', '\UserController:updateUser');
 $app->post('/updateProfile/{profile_id}', '\ProfileController:updateProfile');
+$app->post('/addPortfolio', '\ProfileController:addPortfolio');
