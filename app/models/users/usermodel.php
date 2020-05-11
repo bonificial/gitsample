@@ -1,6 +1,6 @@
 <?php
 include_once 'config/dbh.php';
-
+include_once 'app/models/profile/profilemodel.php';
 class User extends Dbh{
     public $id_user;
     public $name;
@@ -15,12 +15,16 @@ class User extends Dbh{
         $sql = "INSERT INTO users (name,birthdate,phone,email,address,nationality,id_account) VALUES(?,?,?,?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$name,$birthdate,$phone,$email,$address,$nationality,$id_account]);
-
-        return array('message' => 'account successfully created!','status' => 'success');
         $stmt = null;
+        $stmt2 = $this->connect()->prepare("SELECT id_user FROM users WHERE id_account=?");
+        $stmt2->execute([$id_account]);
+        $result = $stmt2->fetch();
+        return (new Profile())->create_profile($result['id_user']);
+        $stmt2 = null;
+
     }
     public function log_user_in($id_account){
-        $sql = "SELECT * FROM users WHERE id_account=?";
+        $sql = "SELECT users.*,profile.id_profile FROM users INNER JOIN profile WHERE id_account=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$id_account]);
         $result = $stmt->fetch();
