@@ -1,7 +1,7 @@
 <?php
 spl_autoload_register(function($class_name) {
     $dirs = array(
-        'app/controllers/'
+        'app/controllers/',
     );
     $subDirs = array(
         '/authenticate/',
