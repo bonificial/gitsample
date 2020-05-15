@@ -10,6 +10,7 @@ spl_autoload_register(function($class_name) {
         '/jobs/',
         '/messages/',
         '/profile/',
+        '/portfolio/',
         '/topics/',
         '/users/'
     );

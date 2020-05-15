@@ -13,5 +13,6 @@ $app->post('/signup', '\AuthController:signup');
 $app->post('/login', '\AuthController:login');
 $app->post('/updateUser', '\UserController:updateUser');
 $app->post('/updateProfile/{profile_id}', '\ProfileController:updateProfile');
-$app->post('/addPortfolio', '\ProfileController:addPortfolio');
-$app->post('/updatePortfolio', '\ProfileController:updatePortfolio');
+$app->post('/addPortfolio', '\PortfolioController:add');
+$app->post('/updatePortfolio', '\PortfolioController:update');
+$app->delete('/deletePortfolio/{id_portfolio}', '\PortfolioController:delete');
