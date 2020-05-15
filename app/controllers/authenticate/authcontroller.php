@@ -1,6 +1,6 @@
 <?php
 
-include_once 'app/models/authenticate/accountmodel.php';
+require_once 'app/models/authenticate/accountmodel.php';
 
 class AuthController extends Account{
     private $errors;
