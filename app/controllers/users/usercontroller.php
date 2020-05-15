@@ -5,7 +5,7 @@ include_once 'app/models/users/usermodel.php';
 class UserController extends User{
     private $errors;
 
-    public function updateUser($request, $response, $args){
+    public function update($request, $response, $args){
         $user = self::validate_userData($request->getParsedBody());
         if($this->errors != null){
         $response->getBody()->write(json_encode($this->_rename_arr_key()));

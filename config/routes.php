@@ -11,8 +11,8 @@ $app->get('/', function (Request $request, Response $response, $args) {
 
 $app->post('/signup', '\AuthController:signup');
 $app->post('/login', '\AuthController:login');
-$app->post('/updateUser', '\UserController:updateUser');
-$app->post('/updateProfile/{profile_id}', '\ProfileController:updateProfile');
-$app->post('/addPortfolio', '\PortfolioController:add');
-$app->post('/updatePortfolio', '\PortfolioController:update');
-$app->delete('/deletePortfolio/{id_portfolio}', '\PortfolioController:delete');
+$app->post('/user/update', '\UserController:update');
+$app->post('/profile/update/{profile_id}', '\ProfileController:updateProfile');
+$app->post('/portfolio/add/', '\PortfolioController:add');
+$app->post('/portfolio/update', '\PortfolioController:update');
+$app->delete('/portfolio/delete/{id_portfolio}', '\PortfolioController:delete');
