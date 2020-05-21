@@ -18,5 +18,44 @@ class Profile extends Dbh{
         return array('message' => 'account successfully created!','status' => 'success');
         $stmt = null;
     }
+    protected function update_profile($data){
+        $Details = $this->get_profile($data['id_profile']);
+        $valid_extensions = array('jpeg', 'jpg', 'png');
+        $path = 'uploads/';
+        $img = isset($_FILES["image"]["name"])?$_FILES["image"]["name"]: null; 
+        $tmp = isset($_FILES["image"]["tmp_name"])?$_FILES["image"]["tmp_name"]:null; 
+        $errorimg = isset($_FILES["image"]["error"])?$_FILES["image"]["error"]: null;
+        if($img== null) ;
+        else{
+            $final_image = strtolower(rand(1000,1000000).$img);
+            $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
+            if(in_array($ext, $valid_extensions)){ 
+               if($Details['image'] !==""){
+                  if($Details['image'] !== null)
+                  unlink($path.$Details['image']);
+               }
+                $path = $path.strtolower($final_image);
+                move_uploaded_file($tmp,$path);
+            }else{
+                return array('message' => 'Invalid Image', 'status' => 'error');
+            }
+           }
+
+        $sql = ($img== null)?"UPDATE profile SET title=?, bio=?, hourly_price=? WHERE id_profile=?":
+                          "UPDATE profile SET title=?, bio=?, image=?, hourly_price=? WHERE id_profile=?";
+        $stmt = $this->connect()->prepare($sql);
+        ($img== null)?$stmt->execute([isset($data['title'])?$data['title']:'',isset($data['bio'])?$data['bio']:'',isset($data['hourly_price'])?$data['hourly_price']:0,$data['id_profile']]):
+                   $stmt->execute([isset($data['title'])?$data['title']:'',isset($data['bio'])?$data['bio']:'',$final_image,isset($data['hourly_price'])?$data['hourly_price']:0,$data['id_profile']]);
+        return array('message' => 'profile successfully updated!','status' => 'success');
+        $stmt = null;
+    }
+    protected function get_profile($id_profile){
+        $sql = "SELECT profile.* FROM profile WHERE id_profile=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$id_profile]);
+        $result = $stmt->fetch();
+        return $result;
+        $stmt = null;
+    }
 
 }
