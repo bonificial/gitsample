@@ -4,8 +4,10 @@
 include_once 'app/models/profile/profilemodel.php';
 class ProfileController extends Profile{
 
-    public function index(){
-        
+    public function index($request, $response, $args){
+        $response->getBody()->write(json_encode($this->get_profiles()));
+        return $response
+                ->withHeader('Content-Type', 'application/json');
     }
     public function update($request, $response, $args){
         $response->getBody()->write(json_encode($this->update_profile($request->getParsedBody())));

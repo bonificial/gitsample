@@ -14,6 +14,7 @@ $app->post('/login', '\AuthController:login');
 $app->post('/user/update', '\UserController:update');
 $app->post('/profile/update', '\ProfileController:update');
 $app->get('/profile/{id_profile}', '\ProfileController:show');
+$app->get('/profile', '\ProfileController:index');
 $app->post('/portfolio/add', '\PortfolioController:add');
 $app->post('/portfolio/update', '\PortfolioController:update');
 $app->delete('/portfolio/delete/{id_portfolio}', '\PortfolioController:delete');
