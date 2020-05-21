@@ -61,7 +61,7 @@ class Profile extends Dbh{
         $sql = "SELECT * FROM profile";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute();
-        $result = $stmt->fetch();
+        $result = $stmt->fetchAll();
         return $result;
         $stmt = null;
     }
