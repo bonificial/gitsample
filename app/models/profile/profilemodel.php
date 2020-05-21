@@ -57,5 +57,13 @@ class Profile extends Dbh{
         return $result;
         $stmt = null;
     }
+    protected function get_profiles(){
+        $sql = "SELECT * FROM profile";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+        $stmt = null;
+    }
 
 }
