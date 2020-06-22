@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2020 at 11:29 PM
+-- Generation Time: Jun 22, 2020 at 12:37 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -25,35 +25,17 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account`
---
-
-CREATE TABLE `account` (
-  `id_account` int(11) NOT NULL,
-  `username` varchar(30) NOT NULL,
-  `password` varchar(90) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `account`
---
-
-INSERT INTO `account` (`id_account`, `username`, `password`) VALUES
-(42, 'kingams001', '$2y$10$iLbrJXsow1WHpXyJ01BVf.ZBsO3tiz3Jg0QWPNaTY6xKKX/ANmAi.');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `certification`
 --
 
 CREATE TABLE `certification` (
   `id_certificate` int(11) NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `description` text NOT NULL,
-  `score` varchar(30) NOT NULL,
-  `id_portfolio` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `title` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `score` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_portfolio` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -63,12 +45,13 @@ CREATE TABLE `certification` (
 
 CREATE TABLE `finance` (
   `id_finance` int(11) NOT NULL,
-  `type` varchar(70) NOT NULL,
+  `type` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount` float NOT NULL,
-  `topic` varchar(150) NOT NULL,
+  `topic` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
   `transaction_date` date NOT NULL,
-  `id_profile` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_profile` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -78,16 +61,16 @@ CREATE TABLE `finance` (
 
 CREATE TABLE `job` (
   `id_job` int(11) NOT NULL,
-  `title` varchar(70) NOT NULL,
-  `tasks` text NOT NULL,
+  `title` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tasks` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `creation_date` date NOT NULL,
-  `description` text NOT NULL,
+  `description` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` float NOT NULL,
-  `id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_user` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -97,16 +80,16 @@ CREATE TABLE `job` (
 
 CREATE TABLE `klass` (
   `id_class` int(11) NOT NULL,
-  `title` varchar(170) NOT NULL,
-  `creation_date` date NOT NULL,
+  `title` varchar(170) COLLATE utf8mb4_unicode_ci NOT NULL,
   `start_date` date NOT NULL,
   `end_start` date NOT NULL,
-  `update_date` date NOT NULL,
   `price` float NOT NULL,
   `number_lessons` int(11) NOT NULL,
-  `rating` varchar(70) NOT NULL,
-  `id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `rating` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -116,12 +99,13 @@ CREATE TABLE `klass` (
 
 CREATE TABLE `lesson` (
   `id_lesson` int(11) NOT NULL,
-  `title` varchar(170) NOT NULL,
-  `description` text NOT NULL,
-  `content` text NOT NULL,
-  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `id_class` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `title` varchar(170) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_class` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -136,8 +120,8 @@ CREATE TABLE `meeting` (
   `proposed_by` int(11) NOT NULL,
   `from_user` int(11) NOT NULL,
   `to_user` int(11) NOT NULL,
-  `status` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `status` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -147,12 +131,12 @@ CREATE TABLE `meeting` (
 
 CREATE TABLE `message` (
   `id_message` int(11) NOT NULL,
-  `message` text NOT NULL,
-  `creation_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `message` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `delete_request` int(11) NOT NULL,
   `parent_message` int(11) DEFAULT NULL,
-  `creator_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `creator_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -163,8 +147,9 @@ CREATE TABLE `message` (
 CREATE TABLE `message_recipient` (
   `id_messr` int(11) NOT NULL,
   `is_read` int(11) NOT NULL,
-  `recipient_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `recipient_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -174,10 +159,11 @@ CREATE TABLE `message_recipient` (
 
 CREATE TABLE `portfolio` (
   `id_portfolio` int(11) NOT NULL,
-  `skills` text NOT NULL,
-  `experience` text NOT NULL,
-  `id_profile` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `skills` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `experience` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_profile` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -187,13 +173,30 @@ CREATE TABLE `portfolio` (
 
 CREATE TABLE `profile` (
   `id_profile` int(11) NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `bio` text NOT NULL,
-  `image` varchar(90) NOT NULL,
-  `ratings` varchar(100) NOT NULL,
-  `hourly_price` float NOT NULL,
-  `id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `fname` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lname` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `languages` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bio` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(90) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `review_id` int(11) NOT NULL,
+  `content` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rating` float NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -203,12 +206,13 @@ CREATE TABLE `profile` (
 
 CREATE TABLE `topics` (
   `id_topic` int(11) NOT NULL,
-  `name` varchar(60) NOT NULL,
+  `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `offeredby` int(11) NOT NULL,
   `charge` float NOT NULL,
-  `chargeString` text NOT NULL,
-  `id_category` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `chargeString` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_category` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -219,7 +223,7 @@ CREATE TABLE `topics` (
 CREATE TABLE `topics_category` (
   `id_category` int(11) NOT NULL,
   `name` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -232,7 +236,7 @@ CREATE TABLE `topic_timings` (
   `start_from` time NOT NULL,
   `end_at` time NOT NULL,
   `id_topic` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -242,21 +246,10 @@ CREATE TABLE `topic_timings` (
 
 CREATE TABLE `users` (
   `id_user` int(11) NOT NULL,
-  `name` varchar(70) NOT NULL,
-  `birthdate` date NOT NULL,
-  `phone` varchar(30) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `address` varchar(600) NOT NULL,
-  `nationality` varchar(30) NOT NULL,
-  `id_account` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id_user`, `name`, `birthdate`, `phone`, `email`, `address`, `nationality`, `id_account`) VALUES
-(15, 'Amadou Sarjo jallow', '1996-07-27', '5336171', 'asj.sarjo@gmail.com', 'Bundung', 'Gambian', 42);
+  `email` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(90) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -267,19 +260,13 @@ INSERT INTO `users` (`id_user`, `name`, `birthdate`, `phone`, `email`, `address`
 CREATE TABLE `wallet` (
   `id_wallet` int(11) NOT NULL,
   `amount` float NOT NULL,
-  `account_number` varchar(30) NOT NULL,
+  `account_number` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `account`
---
-ALTER TABLE `account`
-  ADD PRIMARY KEY (`id_account`);
 
 --
 -- Indexes for table `certification`
@@ -354,6 +341,13 @@ ALTER TABLE `profile`
   ADD KEY `profile_user_fk` (`id_user`);
 
 --
+-- Indexes for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`review_id`),
+  ADD KEY `id_user` (`id_user`);
+
+--
 -- Indexes for table `topics`
 --
 ALTER TABLE `topics`
@@ -377,8 +371,7 @@ ALTER TABLE `topic_timings`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id_user`),
-  ADD KEY `id_account` (`id_account`);
+  ADD PRIMARY KEY (`id_user`);
 
 --
 -- Indexes for table `wallet`
@@ -390,12 +383,6 @@ ALTER TABLE `wallet`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `account`
---
-ALTER TABLE `account`
-  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `certification`
@@ -449,13 +436,19 @@ ALTER TABLE `message_recipient`
 -- AUTO_INCREMENT for table `portfolio`
 --
 ALTER TABLE `portfolio`
-  MODIFY `id_portfolio` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_portfolio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id_profile` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_profile` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `topics`
@@ -479,7 +472,7 @@ ALTER TABLE `topic_timings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `wallet`
@@ -545,13 +538,19 @@ ALTER TABLE `message_recipient`
 -- Constraints for table `portfolio`
 --
 ALTER TABLE `portfolio`
-  ADD CONSTRAINT `portfolio_profile_fk` FOREIGN KEY (`id_profile`) REFERENCES `profile` (`id_profile`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `portfolio_profile_fk` FOREIGN KEY (`id_profile`) REFERENCES `profile` (`id_profile`) ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `profile`
 --
 ALTER TABLE `profile`
   ADD CONSTRAINT `profile_user_fk` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD CONSTRAINT `review_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `topics`
@@ -564,12 +563,6 @@ ALTER TABLE `topics`
 --
 ALTER TABLE `topic_timings`
   ADD CONSTRAINT `timings_fk` FOREIGN KEY (`id_topic`) REFERENCES `topics` (`id_topic`) ON UPDATE CASCADE;
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`id_account`) REFERENCES `account` (`id_account`);
 
 --
 -- Constraints for table `wallet`
