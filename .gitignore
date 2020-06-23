@@ -1,3 +1,4 @@
-lang/
+.vscode
+.idea
 vendor/
-gump.class.php
+uploads/
