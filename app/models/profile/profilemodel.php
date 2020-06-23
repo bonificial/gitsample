@@ -11,10 +11,10 @@ class Profile extends Dbh{
     public $hourly_price;
     public $id_user;
 
-    public function create_profile($id_user){
-        $sql = "INSERT INTO profile (id_user) VALUES(?)";
+    public function create_profile($id_user,$fname,$lname){
+        $sql = "INSERT INTO profile (id_user,fname,lname) VALUES(?,?,?)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$id_user]);
+        $stmt->execute([$id_user,$fname,$lname]);
         return array('message' => 'account successfully created!','status' => 'success');
         $stmt = null;
     }

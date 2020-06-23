@@ -2,7 +2,6 @@
 class Validator{
     public static $errors = null;
     public static function validate_userData($req){
-        require "gump.class.php";
         
         $gump = new GUMP();
 
@@ -35,7 +34,6 @@ class Validator{
         }
     }
     public static function validate_portfolio($req){
-        require "gump.class.php";
         
         $gump = new GUMP();
     
@@ -61,7 +59,6 @@ class Validator{
         }
     }
     public static function validate_portfolio_update($req){
-        require "gump.class.php";
         
         $gump = new GUMP();
        
