@@ -4,11 +4,12 @@ include_once 'config/dbh.php';
 class Profile extends Dbh{
     
     public $id_profile;
-    public $title;
+    public $fname;
+    public $lname;
+    public $country;
+    public $languages;
     public $bio;
     public $image;
-    public $ratings;
-    public $hourly_price;
     public $id_user;
 
     public function create_profile($id_user,$fname,$lname){
@@ -37,15 +38,15 @@ class Profile extends Dbh{
                 $path = $path.strtolower($final_image);
                 move_uploaded_file($tmp,$path);
             }else{
-                return array('message' => 'Invalid Image', 'status' => 'error');
+                return array('message' => 'Invalid Image type. Only jpeg,jpg and png images types are allowed', 'status' => 'error');
             }
            }
 
-        $sql = ($img== null)?"UPDATE profile SET title=?, bio=?, hourly_price=? WHERE id_profile=?":
-                          "UPDATE profile SET title=?, bio=?, image=?, hourly_price=? WHERE id_profile=?";
+        $sql = ($img== null)?"UPDATE profile SET fname=?, lname=?, country=?, languages=?, bio=? WHERE id_profile=?":
+                          "UPDATE profile SET fname=?, lname=?, country=?, languages=?, bio=?, image=? WHERE id_profile=?";
         $stmt = $this->connect()->prepare($sql);
-        ($img== null)?$stmt->execute([isset($data['title'])?$data['title']:'',isset($data['bio'])?$data['bio']:'',isset($data['hourly_price'])?$data['hourly_price']:0,$data['id_profile']]):
-                   $stmt->execute([isset($data['title'])?$data['title']:'',isset($data['bio'])?$data['bio']:'',$final_image,isset($data['hourly_price'])?$data['hourly_price']:0,$data['id_profile']]);
+        ($img== null)?$stmt->execute([$data['fname'],$data['lname'],isset($data['country'])?$data['country']:'',isset($data['languages'])?$data['languages']:'',isset($data['bio'])?$data['bio']:'',$data['id_profile']]):
+                   $stmt->execute([$data['fname'],$data['lname'],isset($data['country'])?$data['country']:'',isset($data['languages'])?$data['languages']:'',isset($data['bio'])?$data['bio']:'',$final_image,$data['id_profile']]);
         return array('message' => 'profile successfully updated!','status' => 'success');
         $stmt = null;
     }

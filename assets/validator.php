@@ -33,6 +33,29 @@ class Validator{
             return $validated_data; // validation successful
         }
     }
+    public static function validate_profileUpdate($req){
+        $gump = new GUMP();
+
+        $parsedata = $gump->sanitize($req); // You don't have to sanitize, but it's safest to do so.
+
+        $gump->validation_rules(array(
+            'fname'       => 'required|max_len,30',
+            'lname'      => 'required|max_len,30'
+        ));
+
+        $gump->filter_rules(array(
+            'fname' => 'trim|sanitize_string',
+            'lname' => 'trim|sanitize_string',
+        ));
+
+        $validated_data = $gump->run($parsedata);
+
+        if($validated_data === false) {
+            return self::$errors = $gump->get_errors_array(true);
+        } else {
+            return $validated_data; // validation successful
+        }
+    }
     public static function validate_portfolio($req){
         
         $gump = new GUMP();
