@@ -1,8 +1,8 @@
 <?php
 
-require_once 'app/models/authenticate/accountmodel.php';
+require_once 'app/models/users/usermodel.php';
 
-class AuthController extends Account{
+class AuthController extends User{
     private $errors;
 
     public function signup($request, $response, $args){
@@ -39,28 +39,23 @@ class AuthController extends Account{
     }
 
     public function validate_data($req){
-      require "gump.class.php";
       
       $gump = new GUMP();
   
       $parsedata = $gump->sanitize($req); // You don't have to sanitize, but it's safest to do so.
   
       $gump->validation_rules(array(
-        'username'   => 'required|alpha_numeric|max_len,100|min_len,6',
-        'password'    => 'required|max_len,100|min_len,8',
+        'fname'       => 'required|max_len,30',
+        'fname'       => 'required|max_len,30',
         'email'       => 'required|valid_email',
-        'name'       => 'required|alpha_space|max_len,100',
-        'birthdate'       => 'required|date,Y/m/d',
-        'phone'       => 'numeric|max_len,20',
+        'password'    => 'required|max_len,100|min_len,8',
       ));
   
       $gump->filter_rules(array(
-        'username' => 'trim|sanitize_string',
-        'password' => 'trim',
+        'fname' => 'trim|sanitize_string',
+        'lname' => 'trim|sanitize_string',
         'email'    => 'trim|sanitize_email',
-        'name' => 'trim|sanitize_string',
-        'birthdate' => 'trim',
-        'phone' => 'trim',
+        'password' => 'trim',
       ));
   
       $validated_data = $gump->run($parsedata);
@@ -72,19 +67,18 @@ class AuthController extends Account{
       }
     }
     public function validate_login_data($req){
-      require "gump.class.php";
       
       $gump = new GUMP();
   
       $parsedata = $gump->sanitize($req); // You don't have to sanitize, but it's safest to do so.
   
       $gump->validation_rules(array(
-        'username'   => 'required|alpha_numeric|max_len,100|min_len,6',
+        'email'       => 'required|valid_email',
         'password'    => 'required|max_len,100|min_len,8'
       ));
   
       $gump->filter_rules(array(
-         'username' => 'trim|sanitize_string',
+         'email'    => 'trim|sanitize_email',
          'password' => 'trim'
       ));
   
