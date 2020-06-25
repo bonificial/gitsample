@@ -11,6 +11,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 
 $app->post('/signup', '\AuthController:signup');
 $app->post('/login', '\AuthController:login');
+$app->get('/account/activate/{hash}', '\AuthController:activate');
 // $app->post('/user/update', '\UserController:update');
 $app->post('/profile/update', '\ProfileController:update');
 $app->get('/profile/{id_profile}', '\ProfileController:show');
