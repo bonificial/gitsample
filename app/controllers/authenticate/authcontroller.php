@@ -30,6 +30,11 @@ class AuthController extends User{
                   ->withHeader('Content-Type', 'application/json');
       }
     }
+    public function activate($request, $response, $args){
+      $response->getBody()->write(json_encode($this->activate_account($args['hash'])));
+      return $response
+                 ->withHeader('Content-Type', 'application/json');
+    }
     /**
      * ams: Helper function to rename array keys.
     */

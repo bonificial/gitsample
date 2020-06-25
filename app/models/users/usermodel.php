@@ -13,14 +13,14 @@ class User extends Dbh{
         $hash = md5(rand(0,1000));
         $sql = " INSERT INTO users (email,password,hash,status) VALUES(?,?,?,?)";
         $stmt = $this->connect()->prepare($sql);
-        $ref = $stmt->execute([$account_details['email'],$account_details['password'],$hash,'pending']);
+        $stmt->execute([$account_details['email'],$account_details['password'],$hash,'pending']);
         $stmt = null;
         //ams: this query is not efficient although it works. I should be using lastInsertId()
         //but due to some unknown reasons, it is not working. so i will revise it later
         $stmt2 = $this->connect()->prepare("SELECT id_user FROM users WHERE email=? AND password=? AND hash=?");
         $stmt2->execute([$account_details['email'],$account_details['password'],$hash]);
         $result = $stmt2->fetch();
-        return (new Profile())->create_profile($result['id_user'],$account_details['fname'],$account_details['lname']);
+        return (new Profile())->create_profile($result['id_user'],$account_details['fname'],$account_details['lname'],$account_details['email'],$hash);
     }
     protected function does_email_exist($email){
         $sql = "SELECT * FROM users WHERE email=?";
@@ -51,14 +51,14 @@ class User extends Dbh{
             $stmt = null;
         }else{
             $this->id_user = $result['id_user'];
-            if($result['status'] == 'pending') return array('message' => 'Activate your account to login. Activation link was sent to your email!', 'status' => 'error');
+            if($result['status'] == 'pending') return array('message' => 'Activate your account to login. An activation link was sent to your email!', 'status' => 'error');
             else return password_verify($account_details['password'], $result['password']);
             $stmt = null;
         }
     }
 
     public function log_user_in($id_user){
-        $sql = "SELECT users.id_user,users.email,profile.id_profile,profile.fname,profile.lname FROM users INNER JOIN profile WHERE users.id_user=?";
+        $sql = "SELECT users.id_user,users.email,profile.id_profile,profile.fname,profile.lname FROM users INNER JOIN profile ON users.id_user=profile.id_user WHERE users.id_user=?";
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$id_user]);
         $result = $stmt->fetch();
@@ -66,6 +66,24 @@ class User extends Dbh{
         return $result;
         $stmt = null;
         
+    }
+    protected function activate_account($hash){
+        $sql = "SELECT id_user,status FROM users WHERE users.hash=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$hash]);
+        $result = $stmt->fetch();
+        if(!$result) return array('message' => 'This link is not valid!', 'status' => 'error');
+        if($result['status'] == 'active') return array('message' => 'Your acount has already been activated!', 'status' => 'error');
+        if($result['status'] == 'pending') return $this->change_status($result['id_user']);
+        $stmt = null;
+    }
+    protected function change_status($id_user){
+        $hash = md5(rand(0,1000));
+        $sql = "UPDATE users SET status=?, hash=? WHERE users.id_user=?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute(['active',$hash,$id_user]);
+        return array('message' => 'Your account has been successfully activated!', 'status' => 'success');
+        $stmt = null;
     }
     // protected  function update_user_info($user){
     //     $sql = isset($user['phone'])?("UPDATE users SET name=?, birthdate=?, phone=?, email=?, address=?, nationality=? WHERE id_user=?"):

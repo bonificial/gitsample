@@ -2,6 +2,7 @@
     "require": {
         "slim/slim": "4.*",
         "slim/psr7": "^1.0",
-        "wixel/gump": "^1.11"
+        "wixel/gump": "^1.11",
+        "phpmailer/phpmailer": "^6.1"
     }
 }
