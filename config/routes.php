@@ -19,3 +19,8 @@ $app->get('/profile', '\ProfileController:index');
 $app->post('/portfolio/add', '\PortfolioController:add');
 $app->post('/portfolio/update', '\PortfolioController:update');
 $app->delete('/portfolio/delete/{id_portfolio}', '\PortfolioController:delete');
+
+/* Auth Reset APIs */
+$app->post('/forgot', '\AuthController:forgotPassword');
+$app->get('/reset/{token}', '\AuthController:reset');
+$app->post('/updateAuth', '\AuthController:updateAuth');

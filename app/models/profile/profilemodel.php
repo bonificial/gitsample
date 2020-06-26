@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\Exception;
 // Load Composer's autoloader
 require 'vendor/autoload.php';
 
-class Profile extends Dbh{
+class Profile extends DBh{
     
     public $id_profile;
     public $fname;
